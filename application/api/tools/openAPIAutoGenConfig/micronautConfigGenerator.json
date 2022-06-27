@@ -1,0 +1,10 @@
+{
+  "invokerPackage": "com.adidas.apiteam",
+  "groupId": "com.adidas.apiteam",
+  "artifactId": "inventory-micronaut",
+  "modelPackage": "com.adidas.apiteam.micronaut.model",
+  "apiPackage": "com.adidas.apiteam.micronaut.api",
+  "dateLibrary": "java11",
+  "java11": "true",
+  "interfaceOnly": "false"
+}

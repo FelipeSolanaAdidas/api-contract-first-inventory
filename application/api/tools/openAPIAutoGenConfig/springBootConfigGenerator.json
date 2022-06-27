@@ -1,0 +1,10 @@
+{
+  "invokerPackage": "com.adidas.apiteam",
+  "groupId": "com.adidas.apiteam",
+  "artifactId": "inventory-spring-boot",
+  "modelPackage": "com.adidas.apiteam.springboot.model",
+  "apiPackage": "com.adidas.apiteam.springboot.api",
+  "dateLibrary": "java11",
+  "java11": "true",
+  "interfaceOnly": "true"
+}

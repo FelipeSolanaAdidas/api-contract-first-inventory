@@ -1,0 +1,6 @@
+.idea
+*.iml
+
+**/target
+
+**/swagger-codegen-cli-3.0.34.jar
