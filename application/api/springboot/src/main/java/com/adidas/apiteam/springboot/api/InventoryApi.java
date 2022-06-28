@@ -33,17 +33,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-06-16T16:53:29.304789800+02:00[Europe/Paris]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-06-28T08:58:01.753082800+02:00[Europe/Paris]")
 @Validated
 public interface InventoryApi {
 
     Logger log = LoggerFactory.getLogger(InventoryApi.class);
 
-    default Optional<ObjectMapper> getObjectMapper() {
+    default Optional<ObjectMapper> getObjectMapper(){
         return Optional.empty();
     }
 
-    default Optional<HttpServletRequest> getRequest() {
+    default Optional<HttpServletRequest> getRequest(){
         return Optional.empty();
     }
 
@@ -51,18 +51,18 @@ public interface InventoryApi {
         return getRequest().map(r -> r.getHeader("Accept"));
     }
 
-    @Operation(summary = "adds an inventory item", description = "Adds an item to the system", tags = {"admins"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "item created"),
-
-            @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
-
-            @ApiResponse(responseCode = "409", description = "an existing item already exists")})
+    @Operation(summary = "adds an inventory item", description = "Adds an item to the system", tags={ "admins" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "201", description = "item created"),
+        
+        @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+        
+        @ApiResponse(responseCode = "409", description = "an existing item already exists") })
     @RequestMapping(value = "/inventory",
-            consumes = {"application/json"},
-            method = RequestMethod.POST)
-    default ResponseEntity<Void> addInventory(@Parameter(in = ParameterIn.DEFAULT, description = "Inventory item to add", schema = @Schema()) @Valid @RequestBody InventoryItem body) {
-        if (getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        consumes = { "application/json" }, 
+        method = RequestMethod.POST)
+    default ResponseEntity<Void> addInventory(@Parameter(in = ParameterIn.DEFAULT, description = "Inventory item to add", schema=@Schema()) @Valid @RequestBody InventoryItem body) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default InventoryApi interface so no example is generated");
         }
@@ -70,21 +70,40 @@ public interface InventoryApi {
     }
 
 
-    @Operation(summary = "searches inventory", description = "By passing in the appropriate options, you can search for available inventory in the system ", tags = {"developers"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "search results matching criteria", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = InventoryItem.class)))),
-
-            @ApiResponse(responseCode = "400", description = "bad input parameter")})
+    @Operation(summary = "change an inventory item", description = "Change an existing item", tags={ "admins" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "204", description = "item changed"),
+        
+        @ApiResponse(responseCode = "400", description = "invalid input, object invalid"),
+        
+        @ApiResponse(responseCode = "409", description = "an existing item already exists") })
     @RequestMapping(value = "/inventory",
-            produces = {"application/json"},
-            method = RequestMethod.GET)
-    default ResponseEntity<List<InventoryItem>> searchInventory(@Parameter(in = ParameterIn.QUERY, description = "pass an optional search string for looking up inventory", schema = @Schema()) @Valid @RequestParam(value = "searchString", required = false) String searchString, @Min(0) @Parameter(in = ParameterIn.QUERY, description = "number of records to skip for pagination", schema = @Schema(allowableValues = {}
-    )) @Valid @RequestParam(value = "skip", required = false) Integer skip, @Min(0) @Max(50) @Parameter(in = ParameterIn.QUERY, description = "maximum number of records to return", schema = @Schema(allowableValues = {}, maximum = "50"
-    )) @Valid @RequestParam(value = "limit", required = false) Integer limit) {
-        if (getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        consumes = { "application/json" }, 
+        method = RequestMethod.PUT)
+    default ResponseEntity<Void> changeInventory(@Parameter(in = ParameterIn.DEFAULT, description = "Inventory item to change", schema=@Schema()) @Valid @RequestBody InventoryItem body) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default InventoryApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
+    @Operation(summary = "searches inventory", description = "By passing in the appropriate options, you can search for available inventory in the system ", tags={ "developers" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "search results matching criteria", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = InventoryItem.class)))),
+        
+        @ApiResponse(responseCode = "400", description = "bad input parameter") })
+    @RequestMapping(value = "/inventory",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<List<InventoryItem>> searchInventory(@Parameter(in = ParameterIn.QUERY, description = "pass an optional search string for looking up inventory" ,schema=@Schema()) @Valid @RequestParam(value = "searchString", required = false) String searchString, @Min(0)@Parameter(in = ParameterIn.QUERY, description = "number of records to skip for pagination" ,schema=@Schema(allowableValues={  }
+)) @Valid @RequestParam(value = "skip", required = false) Integer skip, @Min(0) @Max(50) @Parameter(in = ParameterIn.QUERY, description = "maximum number of records to return" ,schema=@Schema(allowableValues={  }, maximum="50"
+)) @Valid @RequestParam(value = "limit", required = false) Integer limit) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {\r\n  \"releaseDate\" : \"2016-08-29T09:12:33.001Z\",\r\n  \"name\" : \"Widget Adapter\",\r\n  \"availableItems\" : 10,\r\n  \"id\" : \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"manufacturer\" : {\r\n    \"phone\" : \"408-867-5309\",\r\n    \"name\" : \"ACME Corporation\",\r\n    \"homePage\" : \"https://www.acme-corp.com\"\r\n  }\r\n}, {\r\n  \"releaseDate\" : \"2016-08-29T09:12:33.001Z\",\r\n  \"name\" : \"Widget Adapter\",\r\n  \"availableItems\" : 10,\r\n  \"id\" : \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"manufacturer\" : {\r\n    \"phone\" : \"408-867-5309\",\r\n    \"name\" : \"ACME Corporation\",\r\n    \"homePage\" : \"https://www.acme-corp.com\"\r\n  }\r\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {\r\n  \"releaseDate\" : \"2016-08-29T09:12:33.001Z\",\r\n  \"name\" : \"Widget Adapter\",\r\n  \"availableItems\" : 10,\r\n  \"id\" : \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"stock\" : [ {\r\n    \"color\" : \"red\",\r\n    \"availableItems\" : 10\r\n  }, {\r\n    \"color\" : \"red\",\r\n    \"availableItems\" : 10\r\n  } ],\r\n  \"manufacturer\" : {\r\n    \"phone\" : \"408-867-5309\",\r\n    \"name\" : \"ACME Corporation\",\r\n    \"homePage\" : \"https://www.acme-corp.com\"\r\n  }\r\n}, {\r\n  \"releaseDate\" : \"2016-08-29T09:12:33.001Z\",\r\n  \"name\" : \"Widget Adapter\",\r\n  \"availableItems\" : 10,\r\n  \"id\" : \"d290f1ee-6c54-4b01-90e6-d701748f0851\",\r\n  \"stock\" : [ {\r\n    \"color\" : \"red\",\r\n    \"availableItems\" : 10\r\n  }, {\r\n    \"color\" : \"red\",\r\n    \"availableItems\" : 10\r\n  } ],\r\n  \"manufacturer\" : {\r\n    \"phone\" : \"408-867-5309\",\r\n    \"name\" : \"ACME Corporation\",\r\n    \"homePage\" : \"https://www.acme-corp.com\"\r\n  }\r\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
